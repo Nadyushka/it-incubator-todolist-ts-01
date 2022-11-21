@@ -30,9 +30,8 @@ function App() {
         // console.log(updatedTasks)
     }
 
-    const addTask = (newTitleTask:string) => {
-        const newTask: TaskType = {id: v1(), title: newTitleTask, isDone: false}
-        setTasks([newTask, ...tasks])
+    const addTask = (newTitleTask: string) => {
+        setTasks([{id: v1(), title: newTitleTask, isDone: false}, ...tasks])
     }
 
     const changeToDoListFilter = (nextFilterValue: FilterValueType) => {
@@ -40,22 +39,24 @@ function App() {
         // console.log(nextFilterValue)
     }
 
-    let tasksForRender: Array<TaskType> = [];
-    if (filter === "all") {
-        tasksForRender = tasks;
-    } else if (filter === "active") {
-        tasksForRender = tasks.filter(task => task.isDone === false)
-    } else if (filter === "completed") {
-        tasksForRender = tasks.filter(task => task.isDone === true)
+    const getFilteredTask = (tasks: Array<TaskType>, task: FilterValueType): Array<TaskType> => {
+
+         if (filter === "active") {
+            return tasks.filter(task => !task.isDone)
+        } else if (filter === "completed") {
+            return tasks.filter(task => task.isDone)
+        }
+        return tasks;
     }
+
 
     return (
         <div className="App">
             <ToDoList title={toDoListTitle}
-                      tasks={tasksForRender}
+                      tasks={getFilteredTask(tasks,filter)}
                       removeTask={removeTask}
                       changeToDoListFilter={changeToDoListFilter}
-                      addTask = {addTask}
+                      addTask={addTask}
             />
         </div>
     );

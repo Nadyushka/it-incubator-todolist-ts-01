@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {FilterValueType, TaskType} from "./App";
 
 type ToDolIstPropsType = {
@@ -6,10 +6,12 @@ type ToDolIstPropsType = {
     tasks: Array<TaskType>
     removeTask: (taskId: string) => void
     changeToDoListFilter: (nextFilterValue: FilterValueType) => void
-    addTask: (newTitleTask:string)=> void
+    addTask: (newTitleTask: string) => void
 }
 
 const ToDoList = (props: ToDolIstPropsType) => {
+
+    const [newTask, setNewTask] = useState<string>('')
 
     const taskElements = props.tasks.map((task: TaskType) => {
             return <li key={task.id}>
@@ -19,13 +21,22 @@ const ToDoList = (props: ToDolIstPropsType) => {
             </li>
         }
     )
-
     return (
         <div>
             <h3>{props.title}</h3>
             <div>
-                <input/>
-                <button onClick={() => {props.addTask('Angular')}}>+
+                <input
+                    value={newTask}
+                    onKeyDown={(event) => {
+                        if (event.key === "Enter") {
+                            setNewTask(event.currentTarget.value)
+                        }
+                    }}
+                    onChange={(event) => setNewTask(event.currentTarget.value)}/>
+                <button onClick={() => {
+                    props.addTask(newTask)
+                    setNewTask('')
+                }}>+
                 </button>
             </div>
             <ul>
