@@ -23,6 +23,8 @@ function App() {
     ])
 
     const [filter, setFilter] = useState<FilterValueType>('all')
+    const [error, setError] = useState<boolean>(false)
+
 
     const removeTask = (taskId: string) => {
         const updatedTasks = tasks.filter(task => task.id !== taskId)
@@ -31,7 +33,12 @@ function App() {
     }
 
     const addTask = (newTitleTask: string) => {
-        setTasks([{id: v1(), title: newTitleTask, isDone: false}, ...tasks])
+        let newTrimedTitle = newTitleTask.trim()
+        if (newTrimedTitle) {
+            setTasks([{id: v1(), title: newTitleTask, isDone: false}, ...tasks])
+        } else {
+            setError(true)
+        }
     }
 
     const changeToDoListFilter = (nextFilterValue: FilterValueType) => {
@@ -41,7 +48,7 @@ function App() {
 
     const getFilteredTask = (tasks: Array<TaskType>, task: FilterValueType): Array<TaskType> => {
 
-         if (filter === "active") {
+        if (filter === "active") {
             return tasks.filter(task => !task.isDone)
         } else if (filter === "completed") {
             return tasks.filter(task => task.isDone)
@@ -49,14 +56,21 @@ function App() {
         return tasks;
     }
 
+    const changeTaskStatus = (taskId: string, isDone: boolean) => {
+        setTasks(tasks.map(t => t.id === taskId ? {...t, isDone: isDone} : t))
+    }
 
     return (
         <div className="App">
             <ToDoList title={toDoListTitle}
-                      tasks={getFilteredTask(tasks,filter)}
+                      tasks={getFilteredTask(tasks, filter)}
                       removeTask={removeTask}
                       changeToDoListFilter={changeToDoListFilter}
                       addTask={addTask}
+                      changeTaskStatus={changeTaskStatus}
+                      filter={filter}
+                      error={error}
+                      setError={setError}
             />
         </div>
     );
