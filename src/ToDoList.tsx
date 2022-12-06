@@ -13,7 +13,7 @@ type TodoListPropsType = {
     addTask: (title: string,todolistId:string) => void
     removeTask: (taskId: string,todolistId:string) => void
     changeTaskStatus: (taskId: string, isDone: boolean,todolistId:string) => void
-    changeTodoListFilter: (nextFilterValue: FilterValuesType) => void
+    changeTodoListFilter: (nextFilterValue: FilterValuesType,todolistId: string) => void
 }
 
 const TodoList = (props: TodoListPropsType) => {
