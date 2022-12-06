@@ -83,19 +83,24 @@ function App() {
         // const copyTask = {...tasks}
         //  copyTask[todolistId] = updatedTasks
 
-        setTasks({...tasks,
-            [todolistId]: tasks.todolistId.map(t => t.id === taskId ? {...t, isDone: isDone} : t)})
+        setTasks({
+            ...tasks,
+            [todolistId]: tasks.todolistId.map(t => t.id === taskId ? {...t, isDone: isDone} : t)
+        })
 
 
         // setTasks(tasks.map(t => t.id === taskId ? {...t, isDone: isDone} : t))
     }
 
 
-    const changeTodoListFilter = (nextFilterValue: FilterValuesType,todolistId: string) => {
-        setToDoLists(toDoLists.map(tl=>tl.id === todolistId ? {...tl, filter: nextFilterValue} : tl))
+    const changeTodoListFilter = (nextFilterValue: FilterValuesType, todolistId: string) => {
+        setToDoLists(toDoLists.map(tl => tl.id === todolistId ? {...tl, filter: nextFilterValue} : tl))
     }
 
-
+    const removeToDoList = (todolistId: string) => {
+        setToDoLists(toDoLists.filter(tl => tl.id !== todolistId))
+        delete tasks[todolistId]
+    }
 
     const getFilteredTasks =
         (tasks: Array<TaskType>, filter: FilterValuesType): Array<TaskType> => {
