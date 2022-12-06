@@ -78,7 +78,16 @@ function App() {
         // setTasks([{id: v1(), title, isDone: false}, ...tasks[todolistId]])
     }
     const changeTaskStatus = (taskId: string, isDone: boolean, todolistId: string) => {
-        setTasks(tasks.map(t => t.id === taskId ? {...t, isDone: isDone} : t))
+        // const tasksForUpdate: Array<TaskType> = tasks.todolistId
+        // const updatedTasks:Array<TaskType> = tasksForUpdate.map(t => t.id === taskId ? {...t, isDone: isDone} : t)
+        // const copyTask = {...tasks}
+        //  copyTask[todolistId] = updatedTasks
+
+        setTasks({...tasks,
+            [todolistId]: tasks.todolistId.map(t => t.id === taskId ? {...t, isDone: isDone} : t)})
+
+
+        // setTasks(tasks.map(t => t.id === taskId ? {...t, isDone: isDone} : t))
     }
 
 
