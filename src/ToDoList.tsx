@@ -7,6 +7,7 @@ import {FilterValuesType, TaskType} from "./App";
 // 3. Return of func
 
 type TodoListPropsType = {
+    id:string
     title: string
     tasks: Array<TaskType>
     filter: FilterValuesType
@@ -14,6 +15,7 @@ type TodoListPropsType = {
     removeTask: (taskId: string,todolistId:string) => void
     changeTaskStatus: (taskId: string, isDone: boolean,todolistId:string) => void
     changeTodoListFilter: (nextFilterValue: FilterValuesType,todolistId: string) => void
+    removeToDoList: (todolistId:string) => void
 }
 
 const TodoList = (props: TodoListPropsType) => {
@@ -24,9 +26,9 @@ const TodoList = (props: TodoListPropsType) => {
     const tasksListItems = props.tasks.length
         ? <ul>{
             props.tasks.map((task) => {
-                const removeTask = () => props.removeTask(task.id)
+                const removeTask = () => props.removeTask(task.id, props.id)
                 const changeTaskStatus = (e: ChangeEvent<HTMLInputElement>) =>
-                    props.changeTaskStatus(task.id, e.currentTarget.checked)
+                    props.changeTaskStatus(task.id, e.currentTarget.checked, props.id)
 
                 return (
                     <li key={task.id}>
@@ -46,7 +48,7 @@ const TodoList = (props: TodoListPropsType) => {
     const addTask = () => {
         const trimmedTitle = title.trim()
         if (trimmedTitle) {
-            props.addTask(trimmedTitle)
+            props.addTask(trimmedTitle, props.id)
         } else {
             setError(true)
         }
@@ -62,7 +64,7 @@ const TodoList = (props: TodoListPropsType) => {
         }
     }
     const onClickHandlerCreator = (filter: FilterValuesType) =>
-        () => props.changeTodoListFilter(filter)
+        () => props.changeTodoListFilter(filter, props.id)
 
 
     const errorStyles = {fontWeight: "bold", color: "red"}
@@ -73,6 +75,7 @@ const TodoList = (props: TodoListPropsType) => {
     return (
         <div>
             <h3>{props.title}</h3>
+            <span onClick={() => props.removeToDoList(props.id)}>x</span>
             <div>
                 <input
                     value={title}

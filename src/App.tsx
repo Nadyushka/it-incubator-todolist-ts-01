@@ -3,6 +3,7 @@ import './App.css';
 import TodoList from "./TodoList";
 import {v1} from "uuid";
 import toDoList from "../src1/ToDoList";
+import ToDoList from "../src1/ToDoList";
 
 
 //C - create (validation)
@@ -113,17 +114,28 @@ function App() {
                     return tasks
             }
         }
+
+    const todolistComponents = toDoLists.map((tl: toDoListType) => {
+            const filteredTasks = getFilteredTasks(tasks[tl.id], tl.filter)
+            return (
+                <TodoList
+                    id = {tl.id}
+                    tasks={filteredTasks}
+                    title={tl.title}
+                    filter={tl.filter}
+                    addTask={addTask}
+                    removeTask={removeTask}
+                    changeTaskStatus={changeTaskStatus}
+                    changeTodoListFilter={changeTodoListFilter}
+                    removeToDoList = {removeToDoList}
+                />)
+        }
+    )
+
+
     return (
         <div className="App">
-            <TodoList
-                tasks={getFilteredTasks(tasks, filter)}
-                title={todoListTitle}
-                filter={filter}
-                addTask={addTask}
-                removeTask={removeTask}
-                changeTaskStatus={changeTaskStatus}
-                changeTodoListFilter={changeTodoListFilter}
-            />
+            {todolistComponents}
         </div>
     );
 }
