@@ -69,8 +69,8 @@ function App() {
         // console.log(tasks)
     }
     const addTask = (title: string, todolistId: string) => {
-        const tasksForUpdate: Array<TaskType> = tasks.todolistId
-        const newTask: TaskType = {id: v1(), title, isDone: false}
+        const tasksForUpdate: Array<TaskType> = tasks[todolistId]
+        const newTask: TaskType = {id: v1(), title:title, isDone: false}
         // const updatedTasks: Array<TaskType> = [newTask, ...tasksForUpdate]
         // const copyTask = {...tasks}
         //  copyTask[todolistId] = updatedTasks
@@ -86,7 +86,7 @@ function App() {
 
         setTasks({
             ...tasks,
-            [todolistId]: tasks.todolistId.map(t => t.id === taskId ? {...t, isDone: isDone} : t)
+            [todolistId]: tasks[todolistId].map(t => t.id === taskId ? {...t, isDone: isDone} : t)
         })
 
 
