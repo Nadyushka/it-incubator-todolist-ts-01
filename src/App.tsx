@@ -1,80 +1,86 @@
 import React, {useState} from 'react';
 import './App.css';
-import ToDoList from "./ToDoList";
+import TodoList from "./TodoList";
 import {v1} from "uuid";
 
+
+//C - create (validation)
+//R - read (pagination, sorting, filtration)
+//U - update (validation)
+//D - delete (validation)
+
 export type TaskType = {
-    id: string,
-    title: string,
+    id: string
+    title: string
     isDone: boolean
 }
 
-export type FilterValueType = "all" | "active" | "completed"
+type toDoListType = {
+    id:string
+    title:string
+    filter:FilterValuesType
+}
+
+export type FilterValuesType = "all" | "active" | "completed"
 
 function App() {
-    // console.log(v1())
 
-    const toDoListTitle: string = "What to learn"
+    const [toDoLists, setToDoLists] = useState<toDoListType[]>(
+        [
+            {id: v1(), title: "What to learn", filter: 'all'},
+            {id: v1(), title: "What to buy", filter: 'all'}
+        ]
+    )
 
+
+    const todoListTitle: string = "What to learn"
     const [tasks, setTasks] = useState<Array<TaskType>>([
-        {id: v1(), title: "HTML&CSS", isDone: true},
+        {id: v1(), title: "HTML & CSS", isDone: true},
         {id: v1(), title: "JS", isDone: true},
-        {id: v1(), title: "REACT", isDone: false}
+        {id: v1(), title: "React", isDone: false},
     ])
-
-    const [filter, setFilter] = useState<FilterValueType>('all')
-    const [error, setError] = useState<boolean>(false)
-
+    const [filter, setFilter] = useState<FilterValuesType>("all")
 
     const removeTask = (taskId: string) => {
         const updatedTasks = tasks.filter(task => task.id !== taskId)
         setTasks(updatedTasks)
-        // console.log(updatedTasks)
+        console.log(tasks)
     }
-
-    const addTask = (newTitleTask: string) => {
-        let newTrimedTitle = newTitleTask.trim()
-        if (newTrimedTitle) {
-            setTasks([{id: v1(), title: newTitleTask, isDone: false}, ...tasks])
-        } else {
-            setError(true)
-        }
+    const addTask = (title: string) => {
+        setTasks([{id: v1(), title, isDone: false}, ...tasks])
     }
-
-    const changeToDoListFilter = (nextFilterValue: FilterValueType) => {
-        setFilter(nextFilterValue)
-        // console.log(nextFilterValue)
-    }
-
-    const getFilteredTask = (tasks: Array<TaskType>, task: FilterValueType): Array<TaskType> => {
-
-        if (filter === "active") {
-            return tasks.filter(task => !task.isDone)
-        } else if (filter === "completed") {
-            return tasks.filter(task => task.isDone)
-        }
-        return tasks;
-    }
-
     const changeTaskStatus = (taskId: string, isDone: boolean) => {
         setTasks(tasks.map(t => t.id === taskId ? {...t, isDone: isDone} : t))
     }
 
+
+    const changeTodoListFilter = (nextFilterValue: FilterValuesType) => {
+        setFilter(nextFilterValue)
+    }
+    const getFilteredTasks =
+        (tasks: Array<TaskType>, filter: FilterValuesType): Array<TaskType> => {
+            switch (filter) {
+                case "completed":
+                    return tasks.filter(task => task.isDone)
+                case "active":
+                    return tasks.filter(task => !task.isDone)
+                default:
+                    return tasks
+            }
+        }
     return (
         <div className="App">
-            <ToDoList title={toDoListTitle}
-                      tasks={getFilteredTask(tasks, filter)}
-                      removeTask={removeTask}
-                      changeToDoListFilter={changeToDoListFilter}
-                      addTask={addTask}
-                      changeTaskStatus={changeTaskStatus}
-                      filter={filter}
-                      error={error}
-                      setError={setError}
+            <TodoList
+                tasks={getFilteredTasks(tasks, filter)}
+                title={todoListTitle}
+                filter={filter}
+                addTask={addTask}
+                removeTask={removeTask}
+                changeTaskStatus={changeTaskStatus}
+                changeTodoListFilter={changeTodoListFilter}
             />
         </div>
     );
 }
-
 
 export default App;
