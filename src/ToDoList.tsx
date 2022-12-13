@@ -64,8 +64,8 @@ const TodoList = (props: TodoListPropsType) => {
 
     return (
         <div>
-
-            <h3>{props.title}
+            <h3>
+                <EditableSpan title={props.title} changeTitle={(title)=>props.changeTodoListTitle(title, props.id)}/>
                 <button onClick={() => props.removeToDoList(props.id)}>x</button>
             </h3>
             <AddItemForm addItem={addNewTask}/>
