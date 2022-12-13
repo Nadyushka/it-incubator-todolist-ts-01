@@ -4,6 +4,7 @@ import TodoList from "./TodoList";
 import {v1} from "uuid";
 import toDoList from "../src1/ToDoList";
 import ToDoList from "../src1/ToDoList";
+import AddItemForm from "./AddItemForm";
 
 
 //C - create (validation)
@@ -70,7 +71,7 @@ function App() {
     }
     const addTask = (title: string, todolistId: string) => {
         const tasksForUpdate: Array<TaskType> = tasks[todolistId]
-        const newTask: TaskType = {id: v1(), title:title, isDone: false}
+        const newTask: TaskType = {id: v1(), title: title, isDone: false}
         // const updatedTasks: Array<TaskType> = [newTask, ...tasksForUpdate]
         // const copyTask = {...tasks}
         //  copyTask[todolistId] = updatedTasks
@@ -91,6 +92,15 @@ function App() {
 
 
         // setTasks(tasks.map(t => t.id === taskId ? {...t, isDone: isDone} : t))
+    }
+
+    const changeTaskTitle = (taskId: string, title: string, todolistId: string) => {
+
+        setTasks({
+            ...tasks,
+            [todolistId]: tasks[todolistId].map(t => t.id === taskId ? {...t, title: title} : t)
+        })
+        
     }
 
 
@@ -115,11 +125,24 @@ function App() {
             }
         }
 
+    const addToDoList = (title: string) => {
+        const newToDolistId = v1();
+        const newToDolist: toDoListType = {
+            id: newToDolistId,
+            title: title,
+            filter: 'all'
+        }
+        setToDoLists([...toDoLists,newToDolist])
+        setTasks({...tasks, [newToDolistId]: []})
+    }
+
+
+
     const todolistComponents = toDoLists.map((tl: toDoListType) => {
             const filteredTasks = getFilteredTasks(tasks[tl.id], tl.filter)
             return (
                 <TodoList
-                    id = {tl.id}
+                    id={tl.id}
                     tasks={filteredTasks}
                     title={tl.title}
                     filter={tl.filter}
@@ -127,7 +150,8 @@ function App() {
                     removeTask={removeTask}
                     changeTaskStatus={changeTaskStatus}
                     changeTodoListFilter={changeTodoListFilter}
-                    removeToDoList = {removeToDoList}
+                    removeToDoList={removeToDoList}
+
                 />)
         }
     )
@@ -135,6 +159,7 @@ function App() {
 
     return (
         <div className="App">
+            <AddItemForm addItem={addToDoList}/>
             {todolistComponents}
         </div>
     );

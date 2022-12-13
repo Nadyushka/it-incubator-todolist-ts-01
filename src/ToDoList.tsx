@@ -1,5 +1,6 @@
 import React, {ChangeEvent, KeyboardEvent, useState} from 'react';
 import {FilterValuesType, TaskType} from "./App";
+import AddItemForm from './AddItemForm';
 //rsc
 // typescript =>
 // 1. Variable
@@ -12,6 +13,7 @@ type TodoListPropsType = {
     tasks: Array<TaskType>
     filter: FilterValuesType
     addTask: (title: string, todolistId: string) => void
+
     removeTask: (taskId: string, todolistId: string) => void
     changeTaskStatus: (taskId: string, isDone: boolean, todolistId: string) => void
     changeTodoListFilter: (nextFilterValue: FilterValuesType, todolistId: string) => void
@@ -20,8 +22,7 @@ type TodoListPropsType = {
 
 const TodoList = (props: TodoListPropsType) => {
 
-    const [title, setTitle] = useState<string>("")
-    const [error, setError] = useState<boolean>(false)
+
 
     const tasksListItems = props.tasks.length
         ? <ul>{
@@ -45,50 +46,27 @@ const TodoList = (props: TodoListPropsType) => {
             })}</ul>
         : <span>List is empty</span>
 
-    const addTask = () => {
-        const trimmedTitle = title.trim()
-        if (trimmedTitle) {
-            props.addTask(trimmedTitle, props.id)
-        } else {
-            setError(true)
-        }
-        setTitle("")
-    }
-    const setLocalTitle = (e: ChangeEvent<HTMLInputElement>) => {
-        error && setError(false)
-        setTitle(e.currentTarget.value)
-    }
-    const onEnterAddTask = (e: KeyboardEvent<HTMLInputElement>) => {
-        if (e.key === "Enter") {
-            addTask()
-        }
-    }
+
     const onClickHandlerCreator = (filter: FilterValuesType) =>
         () => props.changeTodoListFilter(filter, props.id)
 
+    const addNewTask = (title:string) => {
+        props.addTask(title,props.id)
+    }
 
-    const errorStyles = {fontWeight: "bold", color: "red"}
-    const errorMessage = error
-        ? <div style={errorStyles}>Please, enter task title</div>
-        : null
 
     return (
         <div>
 
+
             <h3>{props.title}
                 <button onClick={() => props.removeToDoList(props.id)}>x</button>
             </h3>
-            <div>
-                <input
-                    value={title}
-                    onKeyDown={onEnterAddTask}
-                    onChange={setLocalTitle}
-                    className={error ? "input-error" : ""}
-                />
-                <button onClick={addTask}>+</button>
-                {errorMessage}
-            </div>
+
+           <AddItemForm addItem={addNewTask}/>
+
             {tasksListItems}
+
             <div>
                 <button
                     className={props.filter === "all" ? "btn-active" : ""}
