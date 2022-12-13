@@ -1,6 +1,7 @@
 import React, {ChangeEvent, KeyboardEvent, useState} from 'react';
 import {FilterValuesType, TaskType} from "./App";
 import AddItemForm from './AddItemForm';
+import EditableSpan from "./EditableSpan";
 //rsc
 // typescript =>
 // 1. Variable
@@ -18,10 +19,11 @@ type TodoListPropsType = {
     changeTaskStatus: (taskId: string, isDone: boolean, todolistId: string) => void
     changeTodoListFilter: (nextFilterValue: FilterValuesType, todolistId: string) => void
     removeToDoList: (todolistId: string) => void
+    changeTaskTitle: (taskId: string, title: string, todolistId: string) => void
+    changeTodoListTitle: (title: string, todolistId: string) => void
 }
 
 const TodoList = (props: TodoListPropsType) => {
-
 
 
     const tasksListItems = props.tasks.length
@@ -31,6 +33,10 @@ const TodoList = (props: TodoListPropsType) => {
                 const changeTaskStatus = (e: ChangeEvent<HTMLInputElement>) =>
                     props.changeTaskStatus(task.id, e.currentTarget.checked, props.id)
 
+                const changeTaskTitle = (title:string) => {
+                    props.changeTaskTitle(task.id, title, props.id)
+                }
+
                 return (
                     <li key={task.id}>
                         <input
@@ -38,8 +44,9 @@ const TodoList = (props: TodoListPropsType) => {
                             checked={task.isDone}
                             onChange={changeTaskStatus}
                         />
-                        <span
-                            className={task.isDone ? "task-done" : ""}>{task.title}</span>
+                        <span className={task.isDone ? "task-done" : ""}>
+                            <EditableSpan title={task.title} changeTitle={changeTaskTitle}/>
+                        </span>
                         <button onClick={removeTask}>x</button>
                     </li>
                 )
@@ -50,23 +57,19 @@ const TodoList = (props: TodoListPropsType) => {
     const onClickHandlerCreator = (filter: FilterValuesType) =>
         () => props.changeTodoListFilter(filter, props.id)
 
-    const addNewTask = (title:string) => {
-        props.addTask(title,props.id)
+    const addNewTask = (title: string) => {
+        props.addTask(title, props.id)
     }
 
 
     return (
         <div>
 
-
             <h3>{props.title}
                 <button onClick={() => props.removeToDoList(props.id)}>x</button>
             </h3>
-
-           <AddItemForm addItem={addNewTask}/>
-
+            <AddItemForm addItem={addNewTask}/>
             {tasksListItems}
-
             <div>
                 <button
                     className={props.filter === "all" ? "btn-active" : ""}
