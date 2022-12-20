@@ -2,6 +2,10 @@ import React, {ChangeEvent, KeyboardEvent, useState} from 'react';
 import {FilterValuesType, TaskType} from "./App";
 import AddItemForm from './AddItemForm';
 import EditableSpan from "./EditableSpan";
+import {Button} from "@mui/material";
+
+
+
 //rsc
 // typescript =>
 // 1. Variable
@@ -33,7 +37,7 @@ const TodoList = (props: TodoListPropsType) => {
                 const changeTaskStatus = (e: ChangeEvent<HTMLInputElement>) =>
                     props.changeTaskStatus(task.id, e.currentTarget.checked, props.id)
 
-                const changeTaskTitle = (title:string) => {
+                const changeTaskTitle = (title: string) => {
                     props.changeTaskTitle(task.id, title, props.id)
                 }
 
@@ -65,24 +69,31 @@ const TodoList = (props: TodoListPropsType) => {
     return (
         <div>
             <h3>
-                <EditableSpan title={props.title} changeTitle={(title)=>props.changeTodoListTitle(title, props.id)}/>
+                <EditableSpan title={props.title} changeTitle={(title) => props.changeTodoListTitle(title, props.id)}/>
                 <button onClick={() => props.removeToDoList(props.id)}>x</button>
             </h3>
             <AddItemForm addItem={addNewTask}/>
             {tasksListItems}
             <div>
-                <button
+                <Button
+                    color='secondary'
+                    size="small"
+                    variant="contained"
                     className={props.filter === "all" ? "btn-active" : ""}
                     onClick={onClickHandlerCreator("all")}>All
-                </button>
-                <button
+                </Button>
+                <Button
+                    size="small"
+                    variant="contained"
                     className={props.filter === "active" ? "btn-active" : ""}
                     onClick={onClickHandlerCreator("active")}>Active
-                </button>
-                <button
+                </Button>
+                <Button
+                    size="small"
+                    variant="contained"
                     className={props.filter === "completed" ? "btn-active" : ""}
                     onClick={onClickHandlerCreator("completed")}>Completed
-                </button>
+                </Button>
             </div>
         </div>
     );
