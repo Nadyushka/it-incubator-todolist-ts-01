@@ -3,6 +3,9 @@ import {FilterValuesType, TaskType} from "./App";
 import AddItemForm from './AddItemForm';
 import EditableSpan from "./EditableSpan";
 import {Button} from "@mui/material";
+
+
+
 //rsc
 // typescript =>
 // 1. Variable
@@ -72,20 +75,25 @@ const TodoList = (props: TodoListPropsType) => {
             <AddItemForm addItem={addNewTask}/>
             {tasksListItems}
             <div>
-                <Button>
-              
+                <Button
+                    color='secondary'
+                    size="small"
+                    variant="contained"
                     className={props.filter === "all" ? "btn-active" : ""}
                     onClick={onClickHandlerCreator("all")}>All
-
                 </Button>
-                <button
+                <Button
+                    size="small"
+                    variant="contained"
                     className={props.filter === "active" ? "btn-active" : ""}
                     onClick={onClickHandlerCreator("active")}>Active
-                </button>
-                <button
+                </Button>
+                <Button
+                    size="small"
+                    variant="contained"
                     className={props.filter === "completed" ? "btn-active" : ""}
                     onClick={onClickHandlerCreator("completed")}>Completed
-                </button>
+                </Button>
             </div>
         </div>
     );
