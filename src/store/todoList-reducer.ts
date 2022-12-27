@@ -53,3 +53,4 @@ export const toDolistsReducer = (toDoLists: toDoListType[], action: toDolistsRed
 }
 
 export const RemoveToDoListAC = (todolistId:string) => ({type: REMOVE_TODOLIST, todolistId: todolistId })
+export const AddToDoListAC = (title:string) => ({type: ADD_TODOLIST, title: title })

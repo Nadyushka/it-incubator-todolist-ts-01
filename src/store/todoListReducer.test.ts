@@ -1,6 +1,6 @@
 import {v1} from "uuid";
 import {
-    ADD_TODOLIST,
+    ADD_TODOLIST, AddToDoListAC,
     CHANGE_FILTER,
     CHANGE_TITLE,
     REMOVE_TODOLIST,
@@ -36,12 +36,8 @@ test('correct todolist should be added', () => {
         {id: todolistId2, title: "What to buy", filter: "all"}
     ]
 
-    let action = {
-        type: ADD_TODOLIST,
-        title: newTodolistTitle
-    }
 
-    const endState = toDolistsReducer(startState, action)
+    const endState = toDolistsReducer(startState, AddToDoListAC(newTodolistTitle))
     //
     expect(endState.length).toBe(3);
     expect(endState[2].title).toBe(newTodolistTitle);
