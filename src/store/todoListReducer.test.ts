@@ -2,7 +2,7 @@ import {v1} from "uuid";
 import {
     ADD_TODOLIST, AddToDoListAC,
     CHANGE_FILTER,
-    CHANGE_TITLE,
+    CHANGE_TITLE, ChangeToDoListTitle, ChangeToDoListTitleAC,
     REMOVE_TODOLIST,
     RemoveToDoListAC,
     toDolistsReducer
@@ -54,13 +54,7 @@ test('correct todolist should change its name', () => {
         {id: todolistId2, title: "What to buy", filter: "all"}
     ]
 
-    let action = {
-        type: CHANGE_TITLE,
-        title: newTodolistTitle,
-        todolistId: todolistId2
-    }
-
-    const endState = toDolistsReducer(startState, action);
+     const endState = toDolistsReducer(startState, ChangeToDoListTitleAC(newTodolistTitle,todolistId2));
 
     expect(endState[0].title).toBe("What to learn");
     expect(endState[1].title).toBe(newTodolistTitle);
