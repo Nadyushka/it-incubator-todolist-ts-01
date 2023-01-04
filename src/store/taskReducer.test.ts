@@ -62,9 +62,7 @@ test('correct task should be added ', () => {
     expect(endState['todolistId2'][0]['isDone']).toBe(false)
 })
 
-
-
-test('correct task status should be changed ', () => {
+test('correct task title should be changed ', () => {
     const startState: TaskStateType = {
         "todolistId1": [
             {id: "1", title: "CSS", isDone: false},
@@ -78,10 +76,11 @@ test('correct task status should be changed ', () => {
         ]
     }
 
-    const endState = taskReducer(startState, ChangeTaskStatusAC('todolistId2', '3', true))
+    const endState = taskReducer(startState, ChangeTaskTitleAC('todolistId2', '2', 'milk-tee'))
 
 
-    expect(startState['todolistId2'][2]['isDone']).toBeFalsy()
-    expect(endState['todolistId2'][2]['isDone']).toBeTruthy()
+    expect(startState['todolistId2'][1]['title']).toBe('milk')
+    expect(endState['todolistId2'][1]['title']).toBe('milk-tee')
 
 })
+
