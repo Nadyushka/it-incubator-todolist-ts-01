@@ -39,9 +39,7 @@ test('correct task should be deleted from correct array', () => {
 })
 
 
-
-
-test('correct task title should be changed ', () => {
+test('correct task should be added ', () => {
     const startState: TaskStateType = {
         "todolistId1": [
             {id: "1", title: "CSS", isDone: false},
@@ -55,13 +53,16 @@ test('correct task title should be changed ', () => {
         ]
     }
 
-    const endState = taskReducer(startState, ChangeTaskTitleAC('todolistId2', '2', 'milk-tee'))
+    const endState = taskReducer(startState, AddTaskAC('todolistId2', 'coffee'))
 
-
-    expect(startState['todolistId2'][1]['title']).toBe('milk')
-    expect(endState['todolistId2'][1]['title']).toBe('milk-tee')
-
+    expect(startState['todolistId2'].length).toBe(3)
+    expect(endState['todolistId2'].length).toBe(4)
+    expect(endState['todolistId2'][0]['title']).toBe('coffee')
+    expect(endState['todolistId2'][0]['id']).toBe('4')
+    expect(endState['todolistId2'][0]['isDone']).toBe(false)
 })
+
+
 
 test('correct task status should be changed ', () => {
     const startState: TaskStateType = {
