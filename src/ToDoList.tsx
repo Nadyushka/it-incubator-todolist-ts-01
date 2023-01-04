@@ -1,8 +1,8 @@
-import React, {ChangeEvent, KeyboardEvent, useState} from 'react';
+import React, {ChangeEvent} from 'react';
 import {FilterValuesType, TaskType} from "./App";
 import AddItemForm from './AddItemForm';
 import EditableSpan from "./EditableSpan";
-import {Button} from "@mui/material";
+
 
 
 
@@ -75,25 +75,21 @@ const TodoList = (props: TodoListPropsType) => {
             <AddItemForm addItem={addNewTask}/>
             {tasksListItems}
             <div>
-                <Button
-                    color='secondary'
-                    size="small"
-                    variant="contained"
+                <button
+
                     className={props.filter === "all" ? "btn-active" : ""}
                     onClick={onClickHandlerCreator("all")}>All
-                </Button>
-                <Button
-                    size="small"
-                    variant="contained"
+                </button>
+                <button
+
                     className={props.filter === "active" ? "btn-active" : ""}
                     onClick={onClickHandlerCreator("active")}>Active
-                </Button>
-                <Button
-                    size="small"
-                    variant="contained"
+                </button>
+                <button
+
                     className={props.filter === "completed" ? "btn-active" : ""}
                     onClick={onClickHandlerCreator("completed")}>Completed
-                </Button>
+                </button>
             </div>
         </div>
     );

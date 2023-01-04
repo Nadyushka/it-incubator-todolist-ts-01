@@ -18,13 +18,13 @@ export type TaskType = {
     isDone: boolean
 }
 
-type toDoListType = {
+export type toDoListType = {
     id: string
     title: string
     filter: FilterValuesType
 }
 
-type TaskStateType = {
+export type TaskStateType = {
     [toDoListId: string]: Array<TaskType>
 }
 
@@ -103,11 +103,9 @@ function App() {
 
     }
 
-
     const changeTodoListFilter = (nextFilterValue: FilterValuesType, todolistId: string) => {
         setToDoLists(toDoLists.map(tl => tl.id === todolistId ? {...tl, filter: nextFilterValue} : tl))
     }
-
 
     const changeTodoListTitle = (title: string, todolistId: string) => {
         setToDoLists(toDoLists.map(tl => tl.id === todolistId ? {...tl, title: title} : tl))
