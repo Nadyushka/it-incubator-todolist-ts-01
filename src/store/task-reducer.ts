@@ -1,6 +1,6 @@
 import {FilterValuesType, toDoListType, TaskStateType, TaskType} from '../App'
 import {v1} from "uuid";
-import {ADD_TODOLIST, AddToDoListActionType} from "./todoList-reducer";
+import {ADD_TODOLIST, AddToDoListActionType, RemoveToDoListActionType} from "./todoList-reducer";
 
 export const REMOVE_TASK = 'REMOVE_TASK' as const;
 export const ADD_TASK = 'ADD_TASK' as const;
@@ -33,7 +33,13 @@ type ChangeTaskStatusAT = {
     isDone: boolean
 }
 
-type taskReducerActionTypes = RemoveTaskAT | AddTaskAT | ChangeTaskTitleAT | ChangeTaskStatusAT | AddToDoListActionType
+type taskReducerActionTypes =
+    RemoveTaskAT
+    | AddTaskAT
+    | ChangeTaskTitleAT
+    | ChangeTaskStatusAT
+    | AddToDoListActionType
+    | RemoveToDoListActionType
 
 export const taskReducer = (tasks: TaskStateType, action: taskReducerActionTypes): TaskStateType => {
     switch (action.type) {
@@ -67,8 +73,10 @@ export const taskReducer = (tasks: TaskStateType, action: taskReducerActionTypes
                     {...t})
             }
         case ADD_TODOLIST:
-        return {...tasks,[action.todolistId]:[]}
-
+            return {...tasks, [action.todolistId]: []}
+        case 'REMOVE-TODOLIST':
+            delete tasks[action["todolistId"]]
+            return {...tasks}
         default:
             return {...tasks}
     }
