@@ -7,9 +7,10 @@ import {
     taskReducer
 } from "./task-reducer";
 
+let startState:TaskStateType;
 
-test('correct task should be deleted from correct array', () => {
-    const startState: TaskStateType = {
+beforeEach(()=>{
+     startState  = {
         "todolistId1": [
             {id: "1", title: "CSS", isDone: false},
             {id: "2", title: "JS", isDone: true},
@@ -21,6 +22,11 @@ test('correct task should be deleted from correct array', () => {
             {id: "3", title: "tea", isDone: false}
         ]
     }
+})
+
+
+test('correct task should be deleted from correct array', () => {
+
 
     const endState = taskReducer(startState, RemoveTaskAC('todolistId2', '2'))
 
@@ -40,18 +46,6 @@ test('correct task should be deleted from correct array', () => {
 
 
 test('correct task should be added ', () => {
-    const startState: TaskStateType = {
-        "todolistId1": [
-            {id: "1", title: "CSS", isDone: false},
-            {id: "2", title: "JS", isDone: true},
-            {id: "3", title: "React", isDone: false}
-        ],
-        "todolistId2": [
-            {id: "1", title: "bread", isDone: false},
-            {id: "2", title: "milk", isDone: true},
-            {id: "3", title: "tea", isDone: false}
-        ]
-    }
 
     const endState = taskReducer(startState, AddTaskAC('todolistId2', 'coffee'))
 
@@ -63,18 +57,6 @@ test('correct task should be added ', () => {
 })
 
 test('correct task title should be changed ', () => {
-    const startState: TaskStateType = {
-        "todolistId1": [
-            {id: "1", title: "CSS", isDone: false},
-            {id: "2", title: "JS", isDone: true},
-            {id: "3", title: "React", isDone: false}
-        ],
-        "todolistId2": [
-            {id: "1", title: "bread", isDone: false},
-            {id: "2", title: "milk", isDone: true},
-            {id: "3", title: "tea", isDone: false}
-        ]
-    }
 
     const endState = taskReducer(startState, ChangeTaskTitleAC('todolistId2', '2', 'milk-tee'))
 
@@ -85,18 +67,6 @@ test('correct task title should be changed ', () => {
 })
 
 test('correct task status should be changed ', () => {
-    const startState: TaskStateType = {
-        "todolistId1": [
-            {id: "1", title: "CSS", isDone: false},
-            {id: "2", title: "JS", isDone: true},
-            {id: "3", title: "React", isDone: false}
-        ],
-        "todolistId2": [
-            {id: "1", title: "bread", isDone: false},
-            {id: "2", title: "milk", isDone: true},
-            {id: "3", title: "tea", isDone: false}
-        ]
-    }
 
     const endState = taskReducer(startState, ChangeTaskStatusAC('todolistId2', '3', true))
 

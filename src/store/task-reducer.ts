@@ -75,8 +75,10 @@ export const taskReducer = (tasks: TaskStateType, action: taskReducerActionTypes
         case ADD_TODOLIST:
             return {...tasks, [action.todolistId]: []}
         case 'REMOVE-TODOLIST':
-            delete tasks[action["todolistId"]]
-            return {...tasks}
+            // delete tasks[action["todolistId"]]
+            // return {...tasks}
+        const {[action.todolistId]:[],...rest} = {...tasks}
+            return rest
         default:
             return {...tasks}
     }
