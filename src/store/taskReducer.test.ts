@@ -7,9 +7,10 @@ import {
     taskReducer
 } from "./task-reducer";
 
+let startState:TaskStateType;
 
-test('correct task should be deleted from correct array', () => {
-    const startState: TaskStateType = {
+beforeEach(()=>{
+     startState  = {
         "todolistId1": [
             {id: "1", title: "CSS", isDone: false},
             {id: "2", title: "JS", isDone: true},
@@ -21,6 +22,11 @@ test('correct task should be deleted from correct array', () => {
             {id: "3", title: "tea", isDone: false}
         ]
     }
+})
+
+
+test('correct task should be deleted from correct array', () => {
+
 
     const endState = taskReducer(startState, RemoveTaskAC('todolistId2', '2'))
 
