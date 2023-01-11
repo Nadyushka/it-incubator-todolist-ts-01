@@ -6,6 +6,7 @@ import toDoList from "../src1/ToDoList";
 import ToDoList from "../src1/ToDoList";
 import AddItemForm from "./AddItemForm";
 import {
+    AddToDoListAC,
     ChangeToDoListFilterAC,
     ChangeToDoListTitleAC, RemoveToDoListAC,
     toDolistsReducer,
@@ -133,6 +134,21 @@ function AppWithReducer() {
         dispatchTasks(action)
     }
 
+    const addToDoList = (title: string) => {
+        // const newToDolistId = v1();
+        // const newToDolist: toDoListType = {
+        //     id: newToDolistId,
+        //     title: title,
+        //     filter: 'all'
+        // }
+
+        let action = AddToDoListAC(title);
+
+        dispatchToDoLists(action)
+        dispatchTasks(action)
+    }
+
+
     const getFilteredTasks =
         (tasks: Array<TaskType>, filter: FilterValuesType): Array<TaskType> => {
             switch (filter) {
@@ -145,16 +161,6 @@ function AppWithReducer() {
             }
         }
 
-    const addToDoList = (title: string) => {
-        const newToDolistId = v1();
-        const newToDolist: toDoListType = {
-            id: newToDolistId,
-            title: title,
-            filter: 'all'
-        }
-        setToDoLists([...toDoLists, newToDolist])
-        setTasks({...tasks, [newToDolistId]: []})
-    }
 
 
     const todolistComponents = toDoLists.map((tl: toDoListType) => {
