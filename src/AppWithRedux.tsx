@@ -1,16 +1,15 @@
-import React, {useState, useReducer, Reducer, Dispatch} from 'react';
+import React from 'react';
 import './App.css';
 import TodoList from "./TodoList";
-import {v1} from "uuid";
 import AddItemForm from "./AddItemForm";
 import {
     AddToDoListAC,
     ChangeToDoListFilterAC,
     ChangeToDoListTitleAC, RemoveToDoListAC,
 } from "./store/todoList-reducer";
-import {AddTaskAC, ChangeTaskStatusAC, ChangeTaskTitleAC, RemoveTaskAC} from "./store/task-reducer";
+import {AddTaskAC, ChangeTaskTitleAC, RemoveTaskAC} from "./store/task-reducer";
 import {useDispatch, useSelector} from "react-redux";
-import {AppRootStateType, store} from "./store/state";
+import {AppRootStateType} from "./store/state";
 
 
 //C - create (validation)
@@ -38,23 +37,24 @@ export type FilterValuesType = "all" | "active" | "completed"
 
 function AppWithRedux() {
 
-    const toDoLists = useSelector<AppRootStateType, toDoListType[]>((state) => state.toDoLists)
-    const tasks = useSelector<AppRootStateType, TaskStateType>((state) => state.tasks)
+   const toDoLists = useSelector<AppRootStateType, toDoListType[]>((state) => state.toDoLists)
+   const tasks = useSelector<AppRootStateType, TaskStateType>((state) => state.tasks)
 
-    const dispatch = useDispatch()
+   const dispatch = useDispatch()
+
+
 
     const removeTask = (taskId: string, todolistId: string) => {
         dispatch(RemoveTaskAC(todolistId, taskId))
-
     }
 
     const addTask = (title: string, todolistId: string) => {
         dispatch(AddTaskAC(todolistId, title))
     }
 
-    const changeTaskStatus = (taskId: string, isDone: boolean, todolistId: string) => {
-        dispatch(ChangeTaskStatusAC(todolistId, taskId, isDone))
-    }
+    // const changeTaskStatus = (taskId: string, isDone: boolean, todolistId: string) => {
+    //     dispatch(ChangeTaskStatusAC(todolistId, taskId, isDone))
+    // }
 
     const changeTaskTitle = (taskId: string, title: string, todolistId: string) => {
         dispatch(ChangeTaskTitleAC(todolistId, taskId, title))
@@ -102,7 +102,7 @@ function AppWithRedux() {
                     filter={tl.filter}
                     addTask={addTask}
                     removeTask={removeTask}
-                    changeTaskStatus={changeTaskStatus}
+
                     changeTodoListFilter={changeTodoListFilter}
                     removeToDoList={removeToDoList}
                     changeTaskTitle={changeTaskTitle}

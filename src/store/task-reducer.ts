@@ -52,7 +52,7 @@ export const taskReducer = (tasks: TaskStateType = initialState, action: taskRed
             }
         case ADD_TASK:
             const newTask: TaskType = {
-                id: '4',
+                id: v1(),
                 title: action.title,
                 isDone: false
             }
