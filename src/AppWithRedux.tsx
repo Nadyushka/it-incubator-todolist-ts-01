@@ -7,7 +7,7 @@ import {
     ChangeToDoListFilterAC,
     ChangeToDoListTitleAC, RemoveToDoListAC,
 } from "./store/todoList-reducer";
-import {AddTaskAC, ChangeTaskTitleAC, RemoveTaskAC} from "./store/task-reducer";
+import {AddTaskAC, ChangeTaskStatusAC, ChangeTaskTitleAC, RemoveTaskAC} from "./store/task-reducer";
 import {useDispatch, useSelector} from "react-redux";
 import {AppRootStateType} from "./store/state";
 
@@ -62,6 +62,11 @@ function AppWithRedux() {
         }
         , [dispatch])
 
+    const changeTaskStatus = useCallback((taskId: string, isDone: boolean, todolistId: string) => {
+            dispatch(ChangeTaskStatusAC(todolistId,taskId, isDone))
+        }
+        , [dispatch])
+
     const changeTodoListFilter = useCallback((nextFilterValue: FilterValuesType, todolistId: string) => {
             dispatch(ChangeToDoListFilterAC(nextFilterValue, todolistId))
         }
@@ -98,7 +103,7 @@ function AppWithRedux() {
                     filter={tl.filter}
                     addTask={addTask}
                     removeTask={removeTask}
-
+                    changeTaskStatus={changeTaskStatus}
                     changeTodoListFilter={changeTodoListFilter}
                     removeToDoList={removeToDoList}
                     changeTaskTitle={changeTaskTitle}
