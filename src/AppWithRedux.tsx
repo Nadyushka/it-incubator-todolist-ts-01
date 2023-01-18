@@ -52,6 +52,7 @@ function AppWithRedux() {
             dispatch(AddTaskAC(todolistId, title))
         }
         , [dispatch])
+
     // const changeTaskStatus = (taskId: string, isDone: boolean, todolistId: string) => {
     //     dispatch(ChangeTaskStatusAC(todolistId, taskId, isDone))
     // }
@@ -84,25 +85,15 @@ function AppWithRedux() {
         , [dispatch])
 
 
-    const getFilteredTasks =
-        (tasks: Array<TaskType>, filter: FilterValuesType): Array<TaskType> => {
-            switch (filter) {
-                case "completed":
-                    return tasks.filter(task => task.isDone)
-                case "active":
-                    return tasks.filter(task => !task.isDone)
-                default:
-                    return tasks
-            }
-        }
+
 
 
     const todolistComponents = toDoLists.map((tl: toDoListType) => {
-            const filteredTasks = getFilteredTasks(tasks[tl.id], tl.filter)
+
             return (
                 <TodoList
                     id={tl.id}
-                    tasks={filteredTasks}
+                    tasks={tasks[tl.id]}
                     title={tl.title}
                     filter={tl.filter}
                     addTask={addTask}

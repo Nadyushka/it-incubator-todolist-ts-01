@@ -118,7 +118,7 @@ function App() {
 
 
 
-    const addToDoList = useCallback( (title: string) => {
+    const addToDoList = (title: string) => {
         const newToDolistId = v1();
         const newToDolist: toDoListType = {
             id: newToDolistId,
@@ -128,7 +128,7 @@ function App() {
         setToDoLists([...toDoLists,newToDolist])
         setTasks({...tasks, [newToDolistId]: []})
     }
-    ,[])
+
 
 
     const todolistComponents = toDoLists.map((tl: toDoListType) => {

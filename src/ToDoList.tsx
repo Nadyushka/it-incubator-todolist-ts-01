@@ -32,20 +32,23 @@ const TodoList = React.memo( (props: TodoListPropsType) => {
 
     const dispatch = useDispatch()
 
-    let tasks:Array<TaskType>;
 
-            switch (props.filter) {
-                case "completed":
-                    tasks = props.tasks.filter(task => task.isDone)
-                case "active":
-                    tasks = props.tasks.filter(task => !task.isDone)
-                default:
-                    tasks = props.tasks
-            }
+    const getFilteredTasks = (tasks:Array<TaskType>, filter:FilterValuesType):Array<TaskType> => {
+        switch (filter) {
+            case "completed":
+                return  tasks.filter(task => task.isDone)
+            case "active":
+                return tasks.filter(task => !task.isDone)
+            default:
+                return tasks
+        }
+    }
 
+    let tasks = getFilteredTasks(props.tasks,props.filter)
 
     const tasksListItems = props.tasks.length
         ? <ul>{
+
             tasks.map((task) => {
                 const removeTask = () => props.removeTask(task.id, props.id)
                 const changeTaskStatus = (e: ChangeEvent<HTMLInputElement>) =>
