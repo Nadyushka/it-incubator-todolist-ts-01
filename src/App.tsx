@@ -116,17 +116,7 @@ function App() {
         delete tasks[todolistId]
     }
 
-    const getFilteredTasks =
-        (tasks: Array<TaskType>, filter: FilterValuesType): Array<TaskType> => {
-            switch (filter) {
-                case "completed":
-                    return tasks.filter(task => task.isDone)
-                case "active":
-                    return tasks.filter(task => !task.isDone)
-                default:
-                    return tasks
-            }
-        }
+
 
     const addToDoList = useCallback( (title: string) => {
         const newToDolistId = v1();
@@ -142,11 +132,11 @@ function App() {
 
 
     const todolistComponents = toDoLists.map((tl: toDoListType) => {
-            const filteredTasks = getFilteredTasks(tasks[tl.id], tl.filter)
+
             return (
                 <TodoList
                     id={tl.id}
-                    tasks={filteredTasks}
+                    tasks={tasks[tl.id]}
                     title={tl.title}
                     filter={tl.filter}
                     addTask={addTask}
