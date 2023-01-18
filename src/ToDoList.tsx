@@ -26,7 +26,9 @@ type TodoListPropsType = {
     changeTodoListTitle: (title: string, todolistId: string) => void
 }
 
-const TodoList = (props: TodoListPropsType) => {
+const TodoList = React.memo( (props: TodoListPropsType) => {
+
+    console.log('TodoList')
 
     const dispatch = useDispatch()
 
@@ -65,7 +67,7 @@ const TodoList = (props: TodoListPropsType) => {
             props.addTask(title, props.id)
         }
         , [props.addTask,props.id])
-    
+
     return (
         <div>
             <h3>
@@ -93,6 +95,6 @@ const TodoList = (props: TodoListPropsType) => {
             </div>
         </div>
     );
-};
+})
 
 export default TodoList;
