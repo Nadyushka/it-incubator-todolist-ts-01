@@ -5,7 +5,9 @@ type AddItemFormPropsType = {
 
 }
 
-const AddItemForm = (props: AddItemFormPropsType) => {
+const AddItemForm = React.memo( (props: AddItemFormPropsType) => {
+
+    console.log('AddItemForm')
 
     const [title, setTitle] = useState<string>("")
     const [error, setError] = useState<boolean>(false)
@@ -48,6 +50,6 @@ const AddItemForm = (props: AddItemFormPropsType) => {
             {errorMessage}
         </div>
     )
-}
+})
 
 export default AddItemForm;

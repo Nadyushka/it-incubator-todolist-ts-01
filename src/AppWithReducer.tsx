@@ -1,4 +1,4 @@
-import React, {useState, useReducer, Reducer} from 'react';
+import React, {useState, useReducer, Reducer, useCallback} from 'react';
 import './App.css';
 import TodoList from "./TodoList";
 import {v1} from "uuid";
@@ -134,7 +134,7 @@ function AppWithReducer() {
         dispatchTasks(action)
     }
 
-    const addToDoList = (title: string) => {
+    const addToDoList = useCallback( (title: string) => {
         // const newToDolistId = v1();
         // const newToDolist: toDoListType = {
         //     id: newToDolistId,
@@ -147,7 +147,7 @@ function AppWithReducer() {
         dispatchToDoLists(action)
         dispatchTasks(action)
     }
-
+    ,[])
 
     const getFilteredTasks =
         (tasks: Array<TaskType>, filter: FilterValuesType): Array<TaskType> => {

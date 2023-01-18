@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useCallback, useState} from 'react';
 import './App.css';
 import TodoList from "./TodoList";
 import {v1} from "uuid";
@@ -128,7 +128,7 @@ function App() {
             }
         }
 
-    const addToDoList = (title: string) => {
+    const addToDoList = useCallback( (title: string) => {
         const newToDolistId = v1();
         const newToDolist: toDoListType = {
             id: newToDolistId,
@@ -138,7 +138,7 @@ function App() {
         setToDoLists([...toDoLists,newToDolist])
         setTasks({...tasks, [newToDolistId]: []})
     }
-
+    ,[])
 
 
     const todolistComponents = toDoLists.map((tl: toDoListType) => {

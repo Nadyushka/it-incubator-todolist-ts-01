@@ -1,11 +1,9 @@
-import React, {ChangeEvent} from 'react';
+import React, {ChangeEvent, useCallback} from 'react';
 import {FilterValuesType, TaskType} from "./App";
 import AddItemForm from './AddItemForm';
 import EditableSpan from "./EditableSpan";
 import {ChangeTaskStatusAC} from "./store/task-reducer";
 import {useDispatch} from "react-redux";
-
-
 
 
 //rsc
@@ -20,7 +18,7 @@ type TodoListPropsType = {
     tasks: Array<TaskType>
     filter: FilterValuesType
     addTask: (title: string, todolistId: string) => void
-    changeTaskStatus?: ( taskId: string, isDone: boolean, todolistId: string) => void
+    changeTaskStatus?: (taskId: string, isDone: boolean, todolistId: string) => void
     removeTask: (taskId: string, todolistId: string) => void
     changeTodoListFilter: (nextFilterValue: FilterValuesType, todolistId: string) => void
     removeToDoList: (todolistId: string) => void
@@ -37,7 +35,7 @@ const TodoList = (props: TodoListPropsType) => {
             props.tasks.map((task) => {
                 const removeTask = () => props.removeTask(task.id, props.id)
                 const changeTaskStatus = (e: ChangeEvent<HTMLInputElement>) =>
-                    dispatch(ChangeTaskStatusAC(props.id, task.id, e.currentTarget.checked, ))
+                    dispatch(ChangeTaskStatusAC(props.id, task.id, e.currentTarget.checked,))
 
                 const changeTaskTitle = (title: string) => {
                     props.changeTaskTitle(task.id, title, props.id)
@@ -63,11 +61,11 @@ const TodoList = (props: TodoListPropsType) => {
     const onClickHandlerCreator = (filter: FilterValuesType) =>
         () => props.changeTodoListFilter(filter, props.id)
 
-    const addNewTask = (title: string) => {
-        props.addTask(title, props.id)
-    }
-
-
+    const addNewTask = useCallback((title: string) => {
+            props.addTask(title, props.id)
+        }
+        , [props.addTask,props.id])
+    
     return (
         <div>
             <h3>
