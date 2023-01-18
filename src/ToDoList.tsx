@@ -1,4 +1,4 @@
-import React, {ChangeEvent, useCallback} from 'react';
+import React, {ChangeEvent, useCallback, useMemo} from 'react';
 import {FilterValuesType, TaskType} from "./App";
 import AddItemForm from './AddItemForm';
 import EditableSpan from "./EditableSpan";
@@ -31,6 +31,7 @@ const TodoList = React.memo((props: TodoListPropsType) => {
 
     console.log('TodoList')
 
+
     const getFilteredTasks = (tasks: Array<TaskType>, filter: FilterValuesType): Array<TaskType> => {
         switch (filter) {
             case "completed":
@@ -42,7 +43,7 @@ const TodoList = React.memo((props: TodoListPropsType) => {
         }
     }
 
-    let tasks = getFilteredTasks(props.tasks, props.filter)
+    let tasks = useMemo(() => getFilteredTasks(props.tasks, props.filter), [props.filter,props.tasks])
 
     const tasksListItems = props.tasks.length
         ? <ul>{

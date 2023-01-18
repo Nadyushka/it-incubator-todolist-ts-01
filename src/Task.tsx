@@ -1,5 +1,4 @@
 import React, {ChangeEvent, useCallback} from 'react';
-import {ChangeTaskStatusAC} from "./store/task-reducer";
 import EditableSpan from "./EditableSpan";
 import {TaskType} from "./App";
 
@@ -7,7 +6,7 @@ type PropsType = {
     toDolistId: string
     task: TaskType
     removeTask: (taskId: string, toDoListid: string) => void
-    changeTaskTitle: (taskId: string, title: string, toDoListid: string) => void
+    changeTaskTitle: (taskId: string, title: string, toDoListId: string) => void
     changeTaskStatus: (taskId: string, isDone: boolean, todolistId: string) => void
 
 }
