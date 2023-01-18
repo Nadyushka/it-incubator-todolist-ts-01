@@ -1,11 +1,11 @@
-import React, {useState} from 'react';
+import React, {memo, useState} from 'react';
 
 type PropsType = {
     title: string
     changeTitle: (title: string) => void
 }
 
-const EditableSpan = (props: PropsType) => {
+const EditableSpan = memo( (props: PropsType) => {
 
     const [isEditMode, setEditMode] = useState<boolean>(false)
     const onEditMode = () => setEditMode(true)
@@ -26,6 +26,6 @@ const EditableSpan = (props: PropsType) => {
             /> :
             <span onDoubleClick={onEditMode}> {props.title}</span>
     );
-};
+})
 
 export default EditableSpan;
