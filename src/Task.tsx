@@ -18,12 +18,13 @@ const Task = React.memo((props: PropsType) => {
 
     const removeTask = () => props.removeTask(props.task.id, props.toDolistId)
 
-    const changeTaskStatus = (e: ChangeEvent<HTMLInputElement>) =>
+    const changeTaskStatus = useCallback( (e: ChangeEvent<HTMLInputElement>) =>
         props.changeTaskStatus(props.task.id, e.currentTarget.checked, props.toDolistId)
+        ,[props.changeTaskStatus,props.task.id,props.toDolistId])
 
-    const changeTaskTitle = (title: string) => {
+    const changeTaskTitle = useCallback((title: string) => {
         props.changeTaskTitle(props.task.id, title, props.toDolistId)
-    }
+    },[props.changeTaskTitle,props.task.id,props.toDolistId])
 
     return (
         <li key={props.task.id}>
