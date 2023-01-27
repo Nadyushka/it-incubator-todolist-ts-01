@@ -5,7 +5,7 @@ type PropsType = {
     changeTitle: (title: string) => void
 }
 
-const EditableSpan = memo( (props: PropsType) => {
+const EditableSpan = React.memo( (props: PropsType) => {
 
     const [isEditMode, setEditMode] = useState<boolean>(false)
     const onEditMode = () => setEditMode(true)

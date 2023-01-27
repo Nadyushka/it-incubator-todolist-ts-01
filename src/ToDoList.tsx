@@ -43,7 +43,7 @@ const TodoList = React.memo((props: TodoListPropsType) => {
         }
     }
 
-    let tasks = useMemo(() => getFilteredTasks(props.tasks, props.filter), [props.filter,props.tasks])
+    let tasks =  getFilteredTasks(props.tasks, props.filter)
 
     const tasksListItems = props.tasks.length
         ? <ul>{
